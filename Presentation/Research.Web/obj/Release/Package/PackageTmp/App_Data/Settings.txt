@@ -1,2 +1,0 @@
-DataProvider: sqlserver
-DataConnectionString: Data Source=.\SQLEXPRESS;Initial Catalog=NopComDatabase;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=superman
