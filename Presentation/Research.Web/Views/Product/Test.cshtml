@@ -1,0 +1,16 @@
+﻿@using Research.Core.Plugins
+@using Research.Core
+@model IPagedList<OfficialFeedPlugin>
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+
+@if(Model != null)
+{
+    foreach(var p in Model)
+    {
+        <p>@p.Name | @p.Url | @p.PictureUrl | @p.Price</p>
+    }
+}

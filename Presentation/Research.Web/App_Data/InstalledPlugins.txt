@@ -1,0 +1,2 @@
+Shipping.CanadaPost
+CurrencyExchange.MoneyConverter

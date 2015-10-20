@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98D86BF8-9397-4FC6-BB5D-1FDEA15824A4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Research.Services</RootNamespace>
+    <AssemblyName>Research.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="MaxMind.Db">
+      <HintPath>..\..\packages\MaxMind.Db.1.0.0.0\lib\net40\MaxMind.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="MaxMind.GeoIP2">
+      <HintPath>..\..\packages\MaxMind.GeoIP2.2.1.0.0\lib\net40\MaxMind.GeoIP2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PerlRegex">
+      <HintPath>..\..\packages\nopCommerceCustom\PerlRegex.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UserAgentStringLibrary">
+      <HintPath>..\..\packages\nopCommerceCustom\UserAgentStringLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\FormsAuthenticationService.cs" />
+    <Compile Include="BaseService.cs" />
+    <Compile Include="Caching\CacheKey.cs" />
+    <Compile Include="Caching\ClearCacheTask.cs" />
+    <Compile Include="Caching\Models\ActivityLogTypeCachePackage.cs" />
+    <Compile Include="Caching\Models\CurrencyForCache.cs" />
+    <Compile Include="Caching\Models\LanguageForCache.cs" />
+    <Compile Include="Caching\Models\SettingForCache.cs" />
+    <Compile Include="Caching\Models\StateProvinceCachePackage.cs" />
+    <Compile Include="Caching\Models\StoreForCache.cs" />
+    <Compile Include="Caching\Models\UrlRecordCachePackage.cs" />
+    <Compile Include="Caching\Writer\IActivityLogTypeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ICountryCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ICurrencyCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ICustomerAndRoleCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ICustomerAttributeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IGenericAttributeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ILanguageCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ILocalizationCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ILocalizedEntityCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IMeasureCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\ActivityLogTypeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\CountryCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\CurrencyCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\CustomerAndRoleCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\CustomerAttributeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\GenericAttributeCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\MeasureCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\SecurityCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\StateProvinceCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\StoreMappingCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ISecurityCacheWriter.cs" />
+    <Compile Include="Caching\Writer\ISettingCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IStateProvinceCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IStoreCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IStoreMappingCacheWriter.cs" />
+    <Compile Include="Caching\Writer\IUrlRecordCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\LanguageCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\LocalizationCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\LocalizedEntityCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\SettingCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\StoreCacheWriter.cs" />
+    <Compile Include="Caching\Writer\Implements\UrlRecordCacheWriter.cs" />
+    <Compile Include="Catalog\Cache\PriceCacheEventConsumer.cs" />
+    <Compile Include="Catalog\ProductService.cs" />
+    <Compile Include="Cms\WidgetExtensions.cs" />
+    <Compile Include="Cms\WidgetService.cs" />
+    <Compile Include="Common\GenericAttributeService.cs" />
+    <Compile Include="Configuration\SettingService.cs" />
+    <Compile Include="Customers\CustomerAttributeService.cs" />
+    <Compile Include="Customers\CustomerRegistrationService.cs" />
+    <Compile Include="Customers\CustomerReportService.cs" />
+    <Compile Include="Customers\CustomerService.cs" />
+    <Compile Include="Customers\DeleteGuestsTask.cs" />
+    <Compile Include="Directory\CountryService.cs" />
+    <Compile Include="Directory\CurrencyService.cs" />
+    <Compile Include="Directory\GeoLookupService.cs" />
+    <Compile Include="Directory\MeasureService.cs" />
+    <Compile Include="Directory\StateProvinceService.cs" />
+    <Compile Include="Directory\UpdateExchangeRateTask.cs" />
+    <Compile Include="Events\EventPublisher.cs" />
+    <Compile Include="Events\EventPublisherExtensions.cs" />
+    <Compile Include="Events\IConsumer.cs" />
+    <Compile Include="Events\IEventPublisher.cs" />
+    <Compile Include="Events\ISubscriptionService.cs" />
+    <Compile Include="Events\SubscriptionService.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\DateTimeSettings.cs" />
+    <Compile Include="Helpers\UserAgentHelper.cs" />
+    <Compile Include="Localization\LanguageService.cs" />
+    <Compile Include="Localization\LocalizationService.cs" />
+    <Compile Include="Localization\LocalizedEntityService.cs" />
+    <Compile Include="Logging\ClearLogTask.cs" />
+    <Compile Include="Logging\CustomerActivityService.cs" />
+    <Compile Include="Logging\DefaultLogger.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Messages\NewsLetterSubscriptionService.cs" />
+    <Compile Include="Orders\AppliedGiftCard.cs" />
+    <Compile Include="Orders\GiftCardService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AclService.cs" />
+    <Compile Include="Security\EncryptionService.cs" />
+    <Compile Include="Security\PermissionService.cs" />
+    <Compile Include="Security\StandardPermissionProvider.cs" />
+    <Compile Include="Seo\SeoExtensions.cs" />
+    <Compile Include="Seo\UrlRecordService.cs" />
+    <Compile Include="Stores\StoreMappingService.cs" />
+    <Compile Include="Stores\StoreService.cs" />
+    <Compile Include="Tasks\ScheduleTaskService.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\TaskThread.cs" />
+    <Compile Include="Vendors\VendorService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Research.Core\Research.Core.csproj">
+      <Project>{75bb890a-cc65-4ebc-9438-f5d53c0e7445}</Project>
+      <Name>Research.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

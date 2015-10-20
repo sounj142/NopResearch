@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>MaxMind.Db</id>
+    <version>1.0.0.0</version>
+    <title>MaxMind.Db</title>
+    <authors>MaxMind,  Inc.</authors>
+    <owners>MaxMind,  Inc.</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>https://github.com/maxmind/MaxMind-DB-Reader-dotnet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET reader for the MaxMind DB file format</description>
+    <copyright>Copyright 2014</copyright>
+    <tags>MaxMind GeoIP2 GeoIP IP database geolocation</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0.5" />
+    </dependencies>
+  </metadata>
+</package>

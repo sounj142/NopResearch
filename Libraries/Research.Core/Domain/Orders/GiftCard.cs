@@ -1,0 +1,110 @@
+﻿using System;
+using System.Collections.Generic;
+using Research.Core.Domain.Catalog;
+
+namespace Research.Core.Domain.Orders
+{
+    /// <summary>
+    /// Represents a gift card
+    /// </summary>
+    public partial class GiftCard : BaseEntity
+    {
+        /// <summary>
+        /// Lịch sử những lần sử dụng gift card này để mua hàng
+        /// </summary>
+        private ICollection<GiftCardUsageHistory> _giftCardUsageHistory;
+
+        /// <summary>
+        /// Gets or sets the associated order item identifier.
+        /// Mục OrderItem được dùng để mua gift card này nếu có. Gift cart là 1 trong các sản phẩm bày bán, có thể mua được. Khi
+        /// gift card đc mua bằng cách sử dụng giỏ hàng, chúng ta sẽ dùng khóa ngoại này để trỏ đến mục chi tiết đơn hàng mua thẻ gift card này để tiện cho
+        /// việc theo dõi sau này
+        /// </summary>
+        public int? PurchasedWithOrderItemId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gift card type identifier
+        /// </summary>
+        public int GiftCardTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the amount
+        /// </summary>
+        public decimal Amount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether gift card is activated
+        /// </summary>
+        public bool IsGiftCardActivated { get; set; }
+
+        /// <summary>
+        /// Gets or sets a gift card coupon code
+        /// </summary>
+        public string GiftCardCouponCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets a recipient name
+        /// </summary>
+        public string RecipientName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a recipient email
+        /// </summary>
+        public string RecipientEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets a sender name
+        /// </summary>
+        public string SenderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a sender email
+        /// </summary>
+        public string SenderEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets a message
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether recipient is notified
+        /// </summary>
+        public bool IsRecipientNotified { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time of instance creation
+        /// </summary>
+        public DateTime CreatedOnUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gift card type
+        /// </summary>
+        public GiftCardType GiftCardType
+        {
+            get
+            {
+                return (GiftCardType)this.GiftCardTypeId;
+            }
+            set
+            {
+                this.GiftCardTypeId = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the gift card usage history
+        /// </summary>
+        public virtual ICollection<GiftCardUsageHistory> GiftCardUsageHistory
+        {
+            get { return _giftCardUsageHistory ?? (_giftCardUsageHistory = new List<GiftCardUsageHistory>()); }
+            protected set { _giftCardUsageHistory = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the associated order item.
+        /// Mục chi tiết đơn hàng dùng để mua gift card
+        /// </summary>
+        public virtual OrderItem PurchasedWithOrderItem { get; set; }
+    }
+}

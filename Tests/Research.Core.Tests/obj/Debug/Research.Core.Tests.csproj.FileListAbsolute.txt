@@ -1,0 +1,12 @@
+D:\Research\NopResearch\Research.Core.Tests\bin\Debug\Research.Core.Tests.dll
+D:\Research\NopResearch\Research.Core.Tests\bin\Debug\Research.Core.Tests.pdb
+D:\Research\NopResearch\Research.Core.Tests\obj\Debug\Research.Core.Tests.dll
+D:\Research\NopResearch\Research.Core.Tests\obj\Debug\Research.Core.Tests.pdb
+D:\Research\NopResearch\Tests\Research.Core.Tests\bin\Debug\Research.Core.Tests.dll
+D:\Research\NopResearch\Tests\Research.Core.Tests\bin\Debug\Research.Core.Tests.pdb
+D:\Research\NopResearch\Tests\Research.Core.Tests\obj\Debug\Research.Core.Tests.dll
+D:\Research\NopResearch\Tests\Research.Core.Tests\obj\Debug\Research.Core.Tests.pdb
+G:\Research\NopResearch\Tests\Research.Core.Tests\bin\Debug\Research.Core.Tests.dll
+G:\Research\NopResearch\Tests\Research.Core.Tests\bin\Debug\Research.Core.Tests.pdb
+G:\Research\NopResearch\Tests\Research.Core.Tests\obj\Debug\Research.Core.Tests.dll
+G:\Research\NopResearch\Tests\Research.Core.Tests\obj\Debug\Research.Core.Tests.pdb

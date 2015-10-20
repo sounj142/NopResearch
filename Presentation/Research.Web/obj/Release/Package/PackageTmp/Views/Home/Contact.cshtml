@@ -1,0 +1,19 @@
+﻿@using Research.Core.Domain.Catalog
+@{
+    ViewBag.Title = "Contact";
+
+    Product product = ViewBag.product;
+}
+<h2>Giá trị là @T("PageTitle.CompareProducts")</h2>
+<h3>@ViewBag.Message</h3>
+
+@if(product != null)
+{
+    <h1>@product.Name</h1>
+    
+    using(Html.BeginForm())
+    {
+        @Html.TextBox("name")
+        <input type="submit" value="Đổi tên" />
+    }
+}
