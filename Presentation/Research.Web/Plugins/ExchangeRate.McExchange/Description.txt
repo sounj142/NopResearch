@@ -1,8 +1,0 @@
-﻿Group: Exchange rate providers
-FriendlyName: Money converter exchange rate provider
-SystemName: CurrencyExchange.MoneyConverter
-Version: 1.06
-SupportedVersions: 3.50
-Author: Hoang
-DisplayOrder: 1
-FileName: Research.Plugin.ExchangeRate.McExchange.dll

@@ -1,8 +1,0 @@
-﻿Group: Shipping rate computation
-FriendlyName: Canada Post
-SystemName: Shipping.CanadaPost
-Version: 1.11
-SupportedVersions: 3.50
-Author: Hoàng
-DisplayOrder: 1
-FileName: Research.Plugin.Shipping.CanadaPost.dll
