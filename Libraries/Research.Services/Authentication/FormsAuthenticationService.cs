@@ -5,7 +5,6 @@ using Research.Core.Domain.Customers;
 using Research.Core.Interface.Service;
 using Research.Core.Fakes;
 using Research.Core;
-using Research.Core.Infrastructure;
 
 namespace Research.Services.Authentication
 {
@@ -67,8 +66,7 @@ namespace Research.Services.Authentication
         public virtual void SignOut()
         {
             _cachedCustomer = null;
-            if (!(_httpContext is FakeHttpContext))
-                FormsAuthentication.SignOut(); // chỉ gọi đến signout nếu đây ko phải là fake request 
+            FormsAuthentication.SignOut(); 
         }
 
         /// <summary>

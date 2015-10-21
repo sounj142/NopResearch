@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Research.Core;
 using Research.Core.Domain.Vendors;
 using Research.Services.Events;

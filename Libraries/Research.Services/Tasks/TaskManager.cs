@@ -25,7 +25,7 @@ namespace Research.Services.Tasks
         {
             get { return _taskManager; }
         }
-        
+
         private readonly IList<TaskThread> _taskThreads = new List<TaskThread>();
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Research.Services.Tasks
         /// <summary>
         /// Qui định thời gian chờ tối đa, những task có thời gian chờ vượt quá sẽ đc xử lý riêng
         /// </summary>
-        private int _notRunTasksInterval = 60 * 30; // 30 phút
+        private int _notRunTasksInterval = 60*30; // 30 phút
 
         private TaskManager()
         {
@@ -72,7 +72,8 @@ namespace Research.Services.Tasks
         /// </summary>
         public void Initialize()
         {
-            Stop(); //// khác ở đây : dừng các task đang có nếu có, nếu ta ko làm điều này sẽ khiến cho các taskThread vẫn sẽ chạy
+            Stop();
+            //// khác ở đây : dừng các task đang có nếu có, nếu ta ko làm điều này sẽ khiến cho các taskThread vẫn sẽ chạy
             // Ta stop thì ít nhất cũng sẽ chỉ chỉ "để xổng" lần chạy cuối cùng, ko stop có thể khiến các taskThread cũ ko bị hủy và chạy song song
             _taskThreads.Clear();
 
@@ -88,7 +89,8 @@ namespace Research.Services.Tasks
                 if (taskThread == null || scheduleTask.Seconds != taskThread.Seconds ||
                     !scheduleTask.RunWithAnotherTask || !prevTask.RunWithAnotherTask)
                 {
-                    taskThread = new TaskThread { Seconds = scheduleTask.Seconds };
+                    taskThread = new TaskThread(scheduleTask.RunWithAnotherTask,
+                        scheduleTask.RunWithAnotherTask ? null : scheduleTask.Name) {Seconds = scheduleTask.Seconds};
                     _taskThreads.Add(taskThread);
                 }
                 taskThread.AddTask(new Task(scheduleTask));
@@ -108,17 +110,31 @@ namespace Research.Services.Tasks
                 !t.LastStartUtc.HasValue || t.LastStartUtc.Value.AddSeconds(_notRunTasksInterval) < DateTime.UtcNow)
                 ).ToList();
             //create a thread for the tasks which weren't run for a long time
-            if(notRunTasks.Count > 0)
+            if (notRunTasks.Count > 0)
             {
-                taskThread = new TaskThread 
-                { 
+                taskThread = new TaskThread(true, null)
+                {
                     RunOnlyOnce = true,
-                    Seconds = 5 * 60 // 5 phút
+                    Seconds = 5*60 // 5 phút
                 };
                 foreach (var task in notRunTasks)
                     taskThread.AddTask(new Task(task));
                 _taskThreads.Add(taskThread);
             }
+        }
+
+        /// <summary>
+        /// allow execute Task manually, wake it up immediately to do task instead of wait it wake up periodically
+        /// </summary>
+        public void ManuallyDoTask(string taskName)
+        {
+            foreach (var taskThread in _taskThreads)
+                if (!taskThread.IsRunWithAnother &&
+                    string.Equals(taskThread.SingleTaskName, taskName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    taskThread.ManuallyDoTask();
+                    return;
+                }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Research.Core.Domain.Directory;
 using Research.Core.Infrastructure;
 using Research.Core.Interface.Service;
-using Research.Services.Events;
 using System;
 
 namespace Research.Services.Directory

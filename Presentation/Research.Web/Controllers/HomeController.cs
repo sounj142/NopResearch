@@ -27,6 +27,7 @@ using Research.Core.Interface.Data;
 using Research.Core.Domain.Customers;
 using Research.Services.Customers;
 using Research.Core.Interface.Service.Orders;
+using Research.Services.Tasks;
 
 // cần cẩn trọng khi tạo task mới với Task.Factory.StartNew, và sau đó Task.Wait nó. Có những lúc task được tạo ra được chạy trên chính
 // thread của request hiện hành ( khi đó HttpContext.Current khac null, và EngineContext.Current.Resolve<HttpContextBase>() sẽ trả về 1 HttpRequestBase
@@ -105,6 +106,13 @@ namespace Research.Web.Controllers
             //ViewBag.AllLanguage = _languageService.GetAllLanguages();
 
             return View();
+        }
+
+        public ActionResult DoTask()
+        {
+            TaskManager.Instance.ManuallyDoTask("Test task");
+            Debug.WriteLine("----Giai quyet yeu cau chay task");
+            return Json(true);
         }
 
         public ActionResult BaoLoi()

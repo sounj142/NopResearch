@@ -20,15 +20,23 @@ namespace Research.Services.Tasks
         /// Bộ đếm thời gian đóng vai trò là đồng hồ của lớp ?
         /// </summary>
         private Timer _timer;
+
         private bool _disposed;
+        private bool _iamRunning;
+
         /// <summary>
         /// Như đã nói, Task sẽ đại diện cho các ScheduleTask trong database => Mỗi key cho bởi ScheduleTask.Type sẽ được hiện thực hóa
         /// bới 1 đối tượng Task. Task đến phiên mình sẽ tự lo việc gọi đến ITask.Excute ( ITask là đối tượng của kiểu ScheduleTask.Type )
         /// </summary>
         private readonly IDictionary<string, Task> _tasks;
 
-        internal TaskThread()
+        public bool IsRunWithAnother { get; private set; }
+        public string SingleTaskName { get; private set; }
+
+        internal TaskThread(bool isRunWithAnother, string singleTaskName)
         {
+            IsRunWithAnother = isRunWithAnother;
+            SingleTaskName = singleTaskName;
             _tasks = new Dictionary<string, Task>();
         }
 
@@ -44,11 +52,6 @@ namespace Research.Services.Tasks
         public DateTime StartedUtc { get; private set; }
 
         /// <summary>
-        /// Chỉ ra thread có đang chạy hay ko
-        /// </summary>
-        public bool IsRunning { get; private set; }
-
-        /// <summary>
         /// Lấy về danh sách các task được quản lý bởi đối tượng
         /// </summary>
         public IList<Task> Tasks
@@ -61,7 +64,7 @@ namespace Research.Services.Tasks
         /// </summary>
         public int Interval
         {
-            get { return Seconds * 1000; }
+            get { return Seconds*1000; }
         }
 
         /// <summary>
@@ -114,21 +117,45 @@ namespace Research.Services.Tasks
         {
             if (Seconds <= 0) return;
             this.StartedUtc = DateTime.UtcNow;
-            this.IsRunning = true;
             foreach (var task in _tasks.Values) task.Execute(); // gọi thưc thi với tham số mặc định
-            this.IsRunning = false;
         }
 
         private void TimerHandler(object state)
         {
-            _timer.Change(Timeout.Infinite, Timeout.Infinite); // yêu cầu timer dừng việc lặp lại. Điều này để đề phòng các tác vụ
-            // thực thi tốn quá hiều thời gian khiến cho lần chạy thứ 2, thứ 3 đến ngay trong khi mà lần chạy thưc nhất chua xong
-            // Thứ nữa, điều này giúp dừng bộ đếm, đảm bảo cho tại thời điểm mà các tác vụ thức hiện xong, có thể chạy lại bộ đếm
-            // và đếm đúng khoảng thời gian gọi lại TimerHandler()
+            if (!_iamRunning)
+            {
+                bool runIt = false;
+                lock (this)
+                {
+                    if (!_iamRunning)
+                    {
+                        // mark that thread is running, this will prevent another task try to wake it up
+                        _iamRunning = true;
+                        runIt = true;
+                    }
+                }
+                if (runIt)
+                {
+                    try
+                    {
+                        _timer.Change(Timeout.Infinite, Timeout.Infinite);
+                        // yêu cầu timer dừng việc lặp lại. Điều này để đề phòng các tác vụ
+                        // thực thi tốn quá hiều thời gian khiến cho lần chạy thứ 2, thứ 3 đến ngay trong khi mà lần chạy thưc nhất chưa xong
+                        // Thứ nữa, điều này giúp dừng bộ đếm, đảm bảo cho tại thời điểm mà các tác vụ thức hiện xong, có thể chạy lại bộ đếm
+                        // và đếm đúng khoảng thời gian gọi lại TimerHandler()
 
-            this.Run(); // thực thi tất cả các ITask (tuần tự)
-            if (this.RunOnlyOnce) this.Dispose(true); // dừng bộ đếm thời gian nếu chỉ thực thi các ITask 1 lần lúc appstart
-            else _timer.Change(Interval, Interval); // thiết đặt lại bộ đếm thời gian
+                        Thread.Sleep(5000);
+                        this.Run(); // thực thi tất cả các ITask (tuần tự)
+                        if (this.RunOnlyOnce)
+                            this.Dispose(true); // dừng bộ đếm thời gian nếu chỉ thực thi các ITask 1 lần lúc appstart
+                        else _timer.Change(Interval, Interval); // thiết đặt lại bộ đếm thời gian
+                    }
+                    finally
+                    {
+                        _iamRunning = false;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -152,7 +179,15 @@ namespace Research.Services.Tasks
         {
             // dùng tên do người dùng đặt để đặt tên cho Task chứ ko dùng Type ?
             // Cũng có lý, cho phép chạy cùng lúc nhiều task có cùng 1 kiểu ?
-            if(!this._tasks.ContainsKey(task.Name)) this._tasks.Add(task.Name, task);
+            if (!this._tasks.ContainsKey(task.Name)) this._tasks.Add(task.Name, task);
+        }
+
+        public void ManuallyDoTask()
+        {
+            if (this.IsRunWithAnother || string.IsNullOrEmpty(this.SingleTaskName))
+                throw new Exception("Can't do task manually when thread is shared for many task");
+            if (_timer != null && !_iamRunning)
+                System.Threading.Tasks.Task.Factory.StartNew(() => TimerHandler(null));
         }
 
         #endregion

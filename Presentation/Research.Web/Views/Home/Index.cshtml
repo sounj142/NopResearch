@@ -5,3 +5,16 @@
 <h3>Current trust level : @Research.Core.CommonHelper.GetTrustLevel()</h3>
 
 <h3>@AppDomain.CurrentDomain.DynamicDirectory</h3>
+
+<button id="btnRunNow">Run task immediately</button>
+
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#btnRunNow").click(function() {
+                $.post("@Url.Action("DoTask", "Home")");
+            });
+        });
+    </script>
+}
